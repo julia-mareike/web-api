@@ -20799,6 +20799,7 @@ var UsersList = function (_React$Component) {
 
       // db.addUser({name: this.state.newName, email: this.state.newEmail})
       _superagent2.default.post('/users').send({ user: { name: this.state.newName, email: this.state.newEmail } }).then(function () {
+        _this2.setState({ newName: '', newEmail: '' });
         _this2.props.refresh();
       }).catch(function (err) {
         console.log(err);
