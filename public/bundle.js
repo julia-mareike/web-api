@@ -20685,12 +20685,18 @@ var App = function (_React$Component) {
     _this.state = {
       users: []
     };
+    _this.refreshUserList = _this.refreshUserList.bind(_this);
     return _this;
   }
 
   _createClass(App, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      this.refreshUserList();
+    }
+  }, {
+    key: 'refreshUserList',
+    value: function refreshUserList() {
       var _this2 = this;
 
       _superagent2.default.get('/users').then(function (res) {
@@ -20716,7 +20722,7 @@ var App = function (_React$Component) {
             'Hello!'
           ),
           _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', render: function render() {
-              return _react2.default.createElement(_UsersList2.default, { users: _this3.state.users });
+              return _react2.default.createElement(_UsersList2.default, { users: _this3.state.users, refresh: _this3.refreshUserList });
             } }),
           _react2.default.createElement(_reactRouterDom.Route, { path: '/:id', component: _Profile2.default })
         )
@@ -20792,8 +20798,8 @@ var UsersList = function (_React$Component) {
       var _this2 = this;
 
       // db.addUser({name: this.state.newName, email: this.state.newEmail})
-      _superagent2.default.post('/users').send({ user: { name: this.state.newName, email: this.state.newEmail } }).then(function (res) {
-        _this2.setState({ newName: '', newEmail: '' });
+      _superagent2.default.post('/users').send({ user: { name: this.state.newName, email: this.state.newEmail } }).then(function () {
+        _this2.props.refresh();
       }).catch(function (err) {
         console.log(err);
       });

@@ -25,8 +25,8 @@ class UsersList extends React.Component {
     request
       .post('/users')
       .send({user: {name: this.state.newName, email: this.state.newEmail} })
-      .then(res => {
-        this.setState({newName: '', newEmail: ''})
+      .then(() => {
+        this.props.refresh()
       })
       .catch(err => {
         console.log(err)

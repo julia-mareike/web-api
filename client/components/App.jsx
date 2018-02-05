@@ -10,9 +10,14 @@ class App extends React.Component {
     this.state = {
       users: []
     }
+    this.refreshUserList = this.refreshUserList.bind(this)
   }
 
   componentDidMount() {
+    this.refreshUserList()
+  }
+
+  refreshUserList() {
     request
       .get('/users')
       .then(res => {
@@ -21,7 +26,6 @@ class App extends React.Component {
         })
       })
   }
-
   
   render() {
 
@@ -29,7 +33,7 @@ class App extends React.Component {
       <Router>
         <div>
           <h1>Hello!</h1>
-          <Route exact path='/' render={() => <UsersList users={this.state.users} />} />
+          <Route exact path='/' render={() => <UsersList users={this.state.users} refresh={this.refreshUserList} />} />
           <Route path='/:id' component={Profile} />
 
         </div>

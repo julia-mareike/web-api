@@ -16,7 +16,9 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   db.addUser(req.body.user)
-    .then(() => {})
+    .then(() => {
+      res.redirect('/')
+    })
     .catch(err => {
       res.status(500).send('DATABASE ERROR: ' + err.message)
     })
